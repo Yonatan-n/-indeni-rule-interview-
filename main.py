@@ -10,7 +10,7 @@ def load_instances(cloud_json_data) -> List[Ec2]:
     ec2s = []
     for inst in cloud_json_data['Instances']:
         instance_id = inst['InstanceId']
-        name =  inst['PrivateDnsName']
+        name =  inst.get('name', '')
         network_interfaces_ids = inst.get('NetworkInterfaces', []) 
         state =  inst['State']['Name']
         image_id =  inst['ImageId']

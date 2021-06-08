@@ -12,6 +12,12 @@ class EnsureNoProductionTagRule(AwsBaseRule):
         # TODO: Part 2 - using cloudrail-knowledge package write rule logic that alerts (creates an issue)
         # if the cloud resource contains environment=production tag
         # documentation can be found here: https://knowledge.docs.cloudrail.app/)
+        for ec2 in  env_context.ec2s:
+            if ec2.tags.get('environment',None) == 'production':
+                issues.append(  Issue(
+                    f"ec2.tags['environment'] = {ec2.tags['environment']}",
+                    ec2,
+                    ec2))
         return issues
 
     def get_id(self) -> str:
