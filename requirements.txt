@@ -1,1 +1,1 @@
-cloudrail-knowledge
+cloudrail-knowledge==0.0.33
