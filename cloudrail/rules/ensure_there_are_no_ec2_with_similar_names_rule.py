@@ -18,16 +18,10 @@ class EnsureThereAreNoEc2WithSimilarNamesRule(AwsBaseRule):
                 index += 1
             if flag == False and max(len(name1, len(name2))) - index <= 1: # 1 letter diff or less
                 return True
+            if name1[index+1:] == name2[index:] or name1[index:] == name2[index+1:]:
+                return True
+            return False
 
-
-            if abs(len(name1) - len(name2)) > 1: # longer by at least 2 letters
-                return False
-            is_similar = False
-            index1 = index2 = 0
-            while index1 < len(name1) and index2 < len(name2):
-                pass
-
-            return True
         issues: List[Issue] = []
         # TODO: Part 3 - using cloudrail-knowledge package write rule logic that alerts (creates an issue)
         # if the 2 ec2 instances contain similar name. See readme.md for similarity definition
