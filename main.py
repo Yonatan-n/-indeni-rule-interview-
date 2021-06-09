@@ -10,19 +10,21 @@ def load_instances(cloud_json_data) -> List[Ec2]:
     ec2s = []
     for inst in cloud_json_data['Instances']:
         instance_id = inst['InstanceId']
-        name =  inst.get('name', '')
-        network_interfaces_ids = inst.get('NetworkInterfaces', []) 
-        state =  inst['State']['Name']
-        image_id =  inst['ImageId']
-        availability_zone =  inst['Placement'].get('AvailabilityZone', None)
-        tags =  { _json["Key"] : _json["Value"] for _json  in inst['Tags']}
-        ec2s.append(Ec2(instance_id,name,network_interfaces_ids,state,image_id,availability_zone,tags))
+        name = inst.get('name', '')
+        network_interfaces_ids = inst.get('NetworkInterfaces', [])
+        state = inst['State']['Name']
+        image_id = inst['ImageId']
+        availability_zone = inst['Placement'].get('AvailabilityZone', None)
+        tags = {_json["Key"]: _json["Value"] for _json in inst['Tags']}
+        ec2s.append(Ec2(instance_id, name, network_interfaces_ids,
+                        state, image_id, availability_zone, tags))
     return ec2s
 
 
 def get_ec2_contains_production_tag(ec2s: List[Ec2]) -> List[Ec2]:
     # TODO: Part 1.b - find all ec2s that have tag environment=production
-    return [ec2 for ec2 in ec2s if ec2.tags.get('environment',None) == "production"]
+    return [ec2 for ec2 in ec2s if ec2.tags.get('environment', None) == "production"]
+
 
 def main():
     cloud_json_data_file = 'cloudrail/cloud-data/ec2-describe-instances.json'
