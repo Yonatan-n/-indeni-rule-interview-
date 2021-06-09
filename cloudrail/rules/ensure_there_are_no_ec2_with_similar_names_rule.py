@@ -29,7 +29,6 @@ class EnsureThereAreNoEc2WithSimilarNamesRule(AwsBaseRule):
         for index, ec2 in enumerate(env_context.ec2s):
             rest_of_ec2s = env_context.ec2s[:index] + \
                 env_context.ec2s[index+1:]
-            print(ec2.name, [x.name for x in rest_of_ec2s])
             for other_ec2 in rest_of_ec2s:
                 if not is_name_similar(ec2.name, other_ec2.name):
                     issues.append(Issue(
